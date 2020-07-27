@@ -6,22 +6,97 @@
     <title>Rock Paper Scissors</title>
 <script type = "text/javascript" src = "RockPaperScissors.js"></script>
 </head>
-<body>
+<body id = "stuff">
     <div id = "Player_Name">WELCOME</div>
     <!-- this is for part 2 of the javascript section of the odin project -->
 
-    <div id= "Player_Buttons"></div>
+    <div id= "Player_Buttons">
+        <button id = "Rock">Rock</button>
+        <button id = "Paper">Paper</button>
+        <button id = "Scissors">Scissors</button><br><br>
+        <button id = "NewGame" class = "Extra">New Game</button>
+
+    </div>
+
+    <div id = "Score">SCOREBOARD</div>
 </body>
 <script>
+
+    let pname = 'UsEr';
+    let rounds = 0;
+    
+    //Stuff For Player Name
     const nameContainer = document.querySelector('#Player_Name');
     let name = document.createElement('p');
-    pname = getName();
-    name.textContent = 'Let\'s play Rock Paper Scissors ${pname}!';
-    nameContainer.appendChild(name);
+    
+    //Score Board
+     board = document.querySelector("#Score");
+    let score = document.createElement('div');
+    let mesg = document.createElement('p');
+    
+    //Have to put this here
+    function NewGame()
+    {
+         pname = getName();
+        rounds = 0;
+        pscore = 0;
+        cscore = 0;
+         match_lenght = prompt("How many rounds would you like to play?", "3");
+        name.textContent = `Let's play Rock Paper Scissors ${pname}!`;
+        nameContainer.appendChild(name);
+        ScoreUpdate(0,0);
+    
 
-    const button = document.querySelector('#Player_Buttons');
+    }
+
+    NewGame();
+    
    
 
+    //Section for non-extra buttons
+    const r_bttn = document.querySelector('#Rock');
+    const p_bttn = document.querySelector('#Paper');
+    const s_bttn = document.querySelector('#Scissors');
+
+
+    //Buttons
+    r_bttn.addEventListener('click',() => {let x = playRound('Rock',computerPlay()); console.log(x); });
+    p_bttn.addEventListener('click',() => {let x = playRound('Rock',computerPlay()); console.log(x);});
+    s_bttn.addEventListener('click',() => {let x = playRound('Rock',computerPlay()); console.log(x);});
+
+    
+
+    //Extra Button
+    const n_bttn = document.querySelector('#NewGame');
+    n_bttn.addEventListener('click',() => {NewGame(); console.log("New Game")})
+
+   
+
+    //Had to put this here too
+    function ScoreUpdate(nPscore,nCscore,)
+    {   
+        let message;
+        if(nPscore>nCscore)
+            message = `${pname} is in the lead!`;
+        else if(nCscore > nPscore)
+            message = "Computer is in the lead";
+        else
+            message = "It's a Tie!"
+
+        if(rounds >= match_lenght && nPscore>nCscore)
+            message = `${pname} WON!`;
+        else if(rounds >= match_lenght && nPscore<nCscore)
+            message = `Computer WON`;
+        else if(rounds >= match_lenght && nPscore == nCscore)
+            message = `It's a tie`;
+        mesg.textContent = message;
+        score.textContent = `${pname}: ${nPscore} Computer: ${nCscore}`;
+        score.appendChild(mesg);
+        board.appendChild(score);
+        stuff.insertBefore(playby,Score)
+    }
+    console.log("Works to here!");
+    
 
 </script>
 </html>

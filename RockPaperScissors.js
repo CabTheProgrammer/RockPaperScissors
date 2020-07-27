@@ -1,4 +1,15 @@
-function computerPlay()
+// Global variable for Player Selection; changed by script in index
+let pSelect, cSelect;
+//Variables for score
+let pscore = 0 ,cscore = 0;
+//lenght of match
+let match_lenght = 0;
+//THis is for the playbys
+let playby = document.createElement('div')
+   
+    // Function to update scores on "scoreboard"
+    
+      function computerPlay()
         {
             let index = Math.floor(Math.random()* 3);
             let array = ["ROCK","PAPER", "SCISSORS"];
@@ -8,20 +19,62 @@ function computerPlay()
 
         function playRound(playerSelection,computerPlay)
         {
+            pSelect = playerSelection;
+            cSelect = computerPlay;
+
+            playby.textContent = `${pname} chose ${pSelect}  Computer chose ${cSelect}`;
+            if (rounds >= match_lenght)
+            {
+                alert("Session Finished! Please  start a new Match");
+
+                if (pscore > cscore)
+                alert(`EXCELSIOR! ${pname} won!` );
+                else if(cscore > pscore)
+                alert('Aww, The Robots win');
+                else
+                alert(`Yay! Its... a tie?`);
+                return;
+
+            }
+            
             if (playerSelection.toUpperCase()==computerPlay)
+               { 
+                pscore += 1;
+                cscore += 1;   
+                rounds += 1;
+                ScoreUpdate(pscore,cscore);
                 return `Welp, Its a Tie! Both chose ${computerPlay}`;
+               }
             
             else if(playerSelection.toUpperCase() == "ROCK" && computerPlay == "PAPER")
-                return `Sorry! ${computerPlay} beats ${playerSelection.toUpperCase()}`;
-            
+                {   cscore += 1;
+                    rounds += 1;
+                    ScoreUpdate(pscore,cscore);
+                    return `Sorry! ${computerPlay} beats ${playerSelection.toUpperCase()}`;
+                }            
             else if(playerSelection.toUpperCase() == "SCISSORS" && computerPlay == "ROCK" )
+           {
+            cscore += 1; 
+            rounds += 1; 
+            ScoreUpdate(pscore,cscore); 
             return `Sorry! ${computerPlay} beats ${playerSelection.toUpperCase()}`;
+           }
             
             else if(playerSelection.toUpperCase() == "PAPER" && computerPlay == "SCISSORS")
-            return `Sorry! ${computerPlay} beats ${playerSelection.toUpperCase()}`;
+            {
+                cscore += 1;
+                rounds += 1;
+                ScoreUpdate(pscore,cscore);
+                return `Sorry! ${computerPlay} beats ${playerSelection.toUpperCase()}`;
+            }
 
             else
-                return `EXCELSIOR! ${playerSelection.toUpperCase()} beats ${computerPlay} `;
+                {
+                    pscore += 1;
+                    rounds += 1;
+                    ScoreUpdate(pscore,cscore);
+                    return `EXCELSIOR! ${playerSelection.toUpperCase()} beats ${computerPlay} `;
+                }
             
         }
         
@@ -31,13 +84,11 @@ function computerPlay()
         }
 
         function game(rounds)
-        {   
-            const name = getName();
-            let pscore = 0 ,cscore = 0, match;
+        {   let match           
 
             for( var count = 1; count<Number(rounds); count ++)
             {
-                match = playRound(prompt("Rock, Paper, Scissors!!"),computerPlay());
+                match = playRound(pSelect,computerPlay());
                 console.log(match);
 
                 if (match.charAt(0) == "W")
